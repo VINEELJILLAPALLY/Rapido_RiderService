@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.service.annotation.PatchExchange;
 
+import com.alpha.rider.entity.LocationCoordinates;
 import com.alpha.rider.entity.Rider;
 import com.alpha.rider.requestdto.RiderCreateDto;
 import com.alpha.rider.requestdto.VehicleUpdateDto;
@@ -28,6 +29,15 @@ public class RiderController {
 	@PatchMapping("/rider/{id}/updatevehicle")
 	public ResponseStructure<Rider> updateVehicle(@PathVariable int id,@RequestBody VehicleUpdateDto vehicleupdatedto) {
 		 return riderservice.updateVehicle(id,vehicleupdatedto);
+	}
+	
+	@PatchMapping("/rider/{id}/{newstatus}/updatestatus")
+	public ResponseStructure<Rider> updateStatus(@PathVariable int id,@PathVariable String newstatus) {
+		 return riderservice.updateStatus(id,newstatus);
+	}
+	@PostMapping("/rider/sharecurrentlocation")
+	public void sendCurrentLoc(@RequestParam String vehicletype,int id,@RequestBody LocationCoordinates coordinates) {
+		riderservice.sendCurrentLoc(vehicletype,id,coordinates);
 	}
 
 }
