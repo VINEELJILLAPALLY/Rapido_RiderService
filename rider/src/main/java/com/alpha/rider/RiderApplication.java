@@ -6,8 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @SpringBootApplication
@@ -16,10 +21,22 @@ public class RiderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RiderApplication.class, args);
 	}
+	 @Bean
+	    public ObjectMapper objectMapper() {
+	        return new ObjectMapper();
+	    }
 	@Bean
 	public RestTemplate restTemplate() {
-		return new RestTemplate();
+
+	    HttpComponentsClientHttpRequestFactory factory =
+	            new HttpComponentsClientHttpRequestFactory();
+		return new RestTemplate(factory);
 	}
+	@Bean
+	public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+		return new StringRedisTemplate(redisConnectionFactory);
+	}
+	
 	@Bean
 	@Primary
 	public RedisTemplate<String, Object> redisTemplate(

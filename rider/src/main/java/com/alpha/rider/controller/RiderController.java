@@ -1,6 +1,10 @@
 package com.alpha.rider.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +43,30 @@ public class RiderController {
 	public void sendCurrentLoc(@RequestParam String vehicletype,int id,@RequestBody LocationCoordinates coordinates) {
 		riderservice.sendCurrentLoc(vehicletype,id,coordinates);
 	}
+	@GetMapping("/rider/getallassignedrides")
+	public ResponseStructure<List<Map<String, Object>>> getAllRides(@RequestParam int rid) {
+	  return	riderservice.getAllAssignedRides(rid);
+	}
+	@PatchMapping("/rider/acceptride")
+	public ResponseStructure<String> acceptRide(@RequestParam("bookingId") int bookingId,@RequestParam("riderId") int riderId) {
+	 return riderservice.acceptRide(bookingId,riderId);
+	}
+	@GetMapping("/rider/movetowardspickup")
+	public ResponseStructure<Map<String, Object>> moveTowardsCustomerLoc(@RequestParam int bid) {
+		 return riderservice.moveTowardsCustomerLoc(bid);
+	}
+	@PatchMapping("/rider/updatearrival")
+	public ResponseStructure<String> updateArrival(@RequestParam int bid) {
+		 return riderservice.updateArrival(bid);
+	}
+	@PatchMapping("/rider/verifyotp")
+	public ResponseStructure<String> verifyOtp(@RequestParam int bid,@RequestParam String otp) {
+		return riderservice.verifyOtp(bid,otp);
+	}
+	@GetMapping("/rider/move-towards-destination")
+	public ResponseStructure<Map<String, Object>> moveTowardsDestination(
+	        @RequestParam int bid) {
 
+	    return riderservice.moveTowardsDestination(bid);
+	}
 }

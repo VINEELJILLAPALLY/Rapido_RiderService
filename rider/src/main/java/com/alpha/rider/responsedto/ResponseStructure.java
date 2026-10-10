@@ -3,13 +3,13 @@ package com.alpha.rider.responsedto;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 public class ResponseStructure<T> {
-	private int statuscode;
+	private Integer statuscode;
 	private String message;
 	private T data;
-	public int getStatuscode() {
+	public Integer getStatuscode() {
 		return statuscode;
 	}
-	public void setStatuscode(int statuscode) {
+	public void setStatuscode(Integer statuscode) {
 		this.statuscode = statuscode;
 	}
 	public String getMessage() {
@@ -27,7 +27,7 @@ public class ResponseStructure<T> {
 	public ResponseStructure() {
 		super();
 	}
-	public ResponseStructure(int statuscode, String message, T data) {
+	public ResponseStructure(Integer statuscode, String message, T data) {
 		super();
 		this.statuscode = statuscode;
 		this.message = message;
